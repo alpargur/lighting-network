@@ -43,10 +43,10 @@ Various MIDI information (pitch, after touch ...) are used to control the lighti
     - Hardware Setup
     - Network Setup (Implementation of MQTT based communication)
     - End-to-End Testing (MIDI signal is successfully transmitted and LED is successfully lit up)
-2.1 Implementation LED controlling program
-2.2 Scale up the lighting network (optional)
-3. Create report
-4. Presentation
+2. Implementation LED controlling program
+3. Scale up the lighting network (optional)
+4. Create report
+5. Presentation
 
 ## Task Distribution
 | Task                                   | Assignee        |
