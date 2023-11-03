@@ -56,3 +56,19 @@ Various MIDI information (pitch, after touch ...) are used to control the lighti
 | Scale up the lighting network          | Alpar, Bach     |
 | Create report                          | Alpar, Bach     |
 | Presentation                           | Alpar, Bach     |
+
+
+# Setup Environment
+- Go to the root folder of the project
+- Make sure you have the `virtualenv` package =>  `pip show virtualenv`
+- If it not install it => `pip install virtualenv`
+- Create a virtual environment => `python -m venv venv`
+- Activate your environment => `source venv/bin/activate`
+- Download the dependencies => `pip install -r requirements.txt`
+- Download for project package => `python setup.py develop`
+
+<br>
+
+- To close the virtual environment => `deactivate`
+- If you need to install new packages run => `pip install <package_name>==<package_version>`
+- And update the **requirements.txt** => `pip freeze > requirements.txt`

@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+midi-lights/__init__.py
+midi_lights.egg-info/PKG-INFO
+midi_lights.egg-info/SOURCES.txt
+midi_lights.egg-info/dependency_links.txt
+midi_lights.egg-info/requires.txt
+midi_lights.egg-info/top_level.txt

@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: midi-lights
+Version: 1.0.0
+Summary: A package to turn MIDI notes into LED lightning controls based on MQTT protocol.
+Author: Alpar & Bach
+License-File: LICENSE
