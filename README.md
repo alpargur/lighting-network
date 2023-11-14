@@ -20,6 +20,13 @@ A subscriber on the controller receives the MIDIs and use the data to control th
 A script is is denoted to control the LED strip. Initial idea is to divide an LED strip by the number of instruments available and assign equal portions of the strip to the instruments. <br>
 Various MIDI information (pitch, after touch ...) are used to control the lighting.
 
+- **MQTT Mosquitto Setup:** <br>
+The server with Ableton will play as a publisher, whereas the Raspberry Pi will be the subscriber. <br>
+The broker must be install and configured at the subscriber's side <br>
+MQTT Port will be set to 1884 instead of 1883.<br>
+
+![MQTT Mosquitto Setup](./assets/img/Broker_Setup.png)
+
 ## System Components
 - Hardware
     - Master node (computer w macOS / Windows)
