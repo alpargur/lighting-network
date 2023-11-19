@@ -11,7 +11,7 @@ KEEP_ALIVE = 60
 # TODO
 
 
-pixels_1 = neopixel.NeoPixel(board. D18, 55, brightness=1)
+pixels_1 = neopixel.NeoPixel(board.D18, 55, brightness=1)
 x = 0
 
 def on_connect(client, data, flags, rc):
