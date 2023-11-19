@@ -1,25 +1,26 @@
 import paho.mqtt.client as mqtt
-from mido import MidiFile
-# This is the Subscriber
+import time 
+import board 
+import neopixel
 
-def on_connect(client, userdata, flags, rc):
-  print("Connected with result code "+str(rc))
-  client.subscribe("topic/test")
+pixels_1 = neopixel. NeoPixel(board. D18, 55, brightness=1)
+x = 0
 
-def on_message(client, userdata, msg):
-    f = open('drum_patterns_2.mid', 'wb')
-    f.write(msg.payload)
-    print("audio Received")
+def on_connect(client, data, flags, rc):
+    print("Connected with result code:\t", str(rc))
+    client.subscribe("midi-note.received")
+
+def on_message(client, data, message):
+    print("Audio received:\t", message.payload)
+    pixels_1.fill((0, 220, 0))
+    pixels_1[10] = (0, 20, 255)
+    pixels_1.fill((0, 0, 0))
 
 
-    f.close()
-    client.disconnect()
-    
+broker = "localhost"
+port = 1884
 client = mqtt.Client()
-client.connect("localhost",1883,60)
-
+client. conect_async(broker, port, 60)
 client.on_connect = on_connect
 client.on_message = on_message
-mid = MidiFile('drum_patterns_2.mid', clip=True)
-print(mid)
 client.loop_forever()
