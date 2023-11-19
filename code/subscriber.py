@@ -1,7 +1,15 @@
 import paho.mqtt.client as mqtt
-import time 
 import board 
 import neopixel
+
+# configuration variable
+NETWORK_PORT = 1883
+BROKER_ADDRESS = "localhost"
+KEEP_ALIVE = 60
+
+# LED configuration
+# TODO
+
 
 pixels_1 = neopixel. NeoPixel(board. D18, 55, brightness=1)
 x = 0
@@ -17,10 +25,9 @@ def on_message(client, data, message):
     pixels_1.fill((0, 0, 0))
 
 
-broker = "localhost"
-port = 1884
+
 client = mqtt.Client()
-client. conect_async(broker, port, 60)
+client. connect_async(BROKER_ADDRESS, NETWORK_PORT, KEEP_ALIVE)
 client.on_connect = on_connect
 client.on_message = on_message
 client.loop_forever()

@@ -2,8 +2,8 @@ import rtmidi
 import paho.mqtt.client as mqtt
 
 ## configuration variables
-NETWORK_IP = "172.20.10.14"
-NETWORK_PORT = 1884
+NETWORK_IP = "192.168.178.64"
+NETWORK_PORT = 1883
 KEEP_ALIVE = 60
 DESTINATION_TOPIC = "midi-note.received"
 MIDI_PORT = 0 # virtual bus midi port
