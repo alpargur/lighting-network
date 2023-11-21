@@ -10,9 +10,7 @@ KEEP_ALIVE = 60
 # LED configuration
 # TODO
 
-
 pixels_1 = neopixel.NeoPixel(board.D18, 55, brightness=1)
-x = 0
 
 def on_connect(client, data, flags, rc):
     print("Connected with result code:\t", str(rc))
