@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import rtmidi
 import paho.mqtt.client as mqtt
 

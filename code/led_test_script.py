@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 #include all neccessary packages to get LEDs to work with Raspberry Pi
 import time
 import board
