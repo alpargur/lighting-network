@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import pickle
 import paho.mqtt.client as mqtt
 import board 
 import neopixel
@@ -19,9 +20,9 @@ def on_connect(client, data, flags, rc):
     client.subscribe("midi-note.received")
 
 def on_message(client, data, message):
-    print("Audio received:\t", message.payload)
+    print("Audio received:\t", pickle.loads(message.payload))
     pixels_1.fill((0, 220, 0))
-    pixels_1[10] = (0, 20, 255)
+    # pixels_1[10] = (0, 20, 255)
     pixels_1.fill((0, 0, 0))
 
 
