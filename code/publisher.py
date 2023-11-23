@@ -2,21 +2,18 @@
 
 import rtmidi
 import paho.mqtt.client as mqtt
+import pickle
 
 ## configuration variables
-NETWORK_IP = "192.168.178.64"
+NETWORK_IP = "172.20.10.14"
 NETWORK_PORT = 1883
 KEEP_ALIVE = 60
 DESTINATION_TOPIC = "midi-note.received"
 MIDI_PORT = 0 # virtual bus midi port
 
-def midi_publisher(midi_in):
+def midi_publisher(midi_in, client):
     ## get the available midi input ports
     midi_ports = range(midi_in.getPortCount())
-    
-    ## establish mqtt connection
-    # client = mqtt.Client()
-    # client.connect(NETWORK_IP, NETWORK_PORT, KEEP_ALIVE)
 
     if not midi_ports:
         print("No MIDI input port's available.")
@@ -36,24 +33,37 @@ def midi_publisher(midi_in):
     # Clean up
     midi_in.closePort()
     midi_in.cancelCallback()
-    # client.disconnect()
+    client.disconnect()
 
 def midi_handler(midi):
     if midi.isNoteOn():
         print('MIDI NOTE PUBLISHED')
         print('ON:\t', midi.getMidiNoteName(midi.getNoteNumber()), midi.getVelocity(), '\n')
-        # publish message
+
+        # publish message 
         # TODO: parse and serialize midi messages
-        # client.publish(DESTINATION_TOPIC, "hello world")
+        client.publish(DESTINATION_TOPIC, midi_serializer(midi))
 
     elif midi.isNoteOff():
         print('OFF:\t', midi.getMidiNoteName(midi.getNoteNumber()))
+        client.publish(DESTINATION_TOPIC, midi_serializer(midi))
 
     elif midi.isController():
         print('MIDI Controller Number:\t' + midi.getControllerNumber() + '\tMIDI Controller Value:\t' + midi.getControllerValue())
 
+def midi_serializer(midi):
+    midi_message = {
+        'noteOn': midi.isNoteOn(),
+        'key': midi.getMidiNoteName(midi.getNoteNumber()),
+        'keyNumber': midi.getNoteNumber(),
+        'velocity': midi.getVelocity()
+    }
+    return pickle.dumps(midi_message)
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     midi_in = rtmidi.RtMidiIn()
-    midi_publisher(midi_in)
+    ## establish mqtt connection 
+    client = mqtt.Client()
+    client.connect(NETWORK_IP, NETWORK_PORT, KEEP_ALIVE)
+    midi_publisher(midi_in, client)
     

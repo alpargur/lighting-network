@@ -58,11 +58,11 @@ MQTT Port will be set to 1884 instead of 1883.<br>
 ## Task Distribution
 | Task                                   | Assignee        |
 |----------------------------------------|-----------------|
-| Build the end-to-end architecture      | Alpar, Bach     |
-| Implementation LED controlling program | Alpar, Bach     |
-| Scale up the lighting network          | Alpar, Bach     |
-| Create report                          | Alpar, Bach     |
-| Presentation                           | Alpar, Bach     |
+| [x] Build the end-to-end architecture      | Alpar, Bach     |
+| [] Implementation LED controlling program | Alpar, Bach     |
+| [] Scale up the lighting network          | Alpar, Bach     |
+| [] Create report                          | Alpar, Bach     |
+| [] Presentation                           | Alpar, Bach     |
 
 
 # Setup Environment
@@ -79,3 +79,10 @@ MQTT Port will be set to 1884 instead of 1883.<br>
 - To close the virtual environment => `deactivate`
 - If you need to install new packages run => `pip install <package_name>==<package_version>`
 - And update the **requirements.txt** => `pip freeze > requirements.txt`
+
+# ToDos
+- [x] (De)serialize MIDI messages
+- [] SSH connection
+- [] Switch configuration
+- [] Wireshark
+- [] LED controller
