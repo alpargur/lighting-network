@@ -8,7 +8,7 @@ import neopixel
 # configuration variable
 NETWORK_PORT = 1883
 BROKER_ADDRESS = "localhost"
-KEEP_ALIVE = 120
+KEEP_ALIVE = 121
 
 # LED configuration
 # TODO
