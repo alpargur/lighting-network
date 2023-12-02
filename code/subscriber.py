@@ -8,7 +8,7 @@ import neopixel
 # configuration variable
 NETWORK_PORT = 1883
 BROKER_ADDRESS = "localhost"
-KEEP_ALIVE = 60
+KEEP_ALIVE = 120
 
 # LED configuration
 # TODO
@@ -22,7 +22,7 @@ def on_connect(client, data, flags, rc):
 def on_message(client, data, message):
     print("Audio received:\t", pickle.loads(message.payload))
     pixels_1.fill((0, 220, 0))
-    # pixels_1[10] = (0, 20, 255)
+    pixels_1[10] = (0, 20, 255)
     pixels_1.fill((0, 0, 0))
 
 

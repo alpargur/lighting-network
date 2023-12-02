@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import pickle
 
 ## configuration variables
-NETWORK_IP = "172.20.10.14"
+NETWORK_IP = "139.6.19.50"
 NETWORK_PORT = 1883
 KEEP_ALIVE = 60
 DESTINATION_TOPIC = "midi-note.received"
@@ -45,7 +45,7 @@ def midi_handler(midi):
         client.publish(DESTINATION_TOPIC, midi_serializer(midi))
 
     elif midi.isNoteOff():
-        print('OFF:\t', midi.getMidiNoteName(midi.getNoteNumber()))
+        print('OFF:\t', midi.getMidiNoteName(midi.getNoteNumber()), '\n')
         client.publish(DESTINATION_TOPIC, midi_serializer(midi))
 
     elif midi.isController():
