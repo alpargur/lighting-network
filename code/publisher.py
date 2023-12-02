@@ -3,6 +3,7 @@
 import rtmidi
 import paho.mqtt.client as mqtt
 import pickle
+from datetime import datetime
 
 ## configuration variables
 NETWORK_IP = '139.6.19.50'
@@ -42,7 +43,7 @@ def midi_handler(midi):
 
         # publish message 
         # TODO: parse and serialize midi messages
-        client.publish(DESTINATION_TOPIC, midi_serializer(midi))
+        client.publish(topic=DESTINATION_TOPIC, payload=midi_serializer(midi), qos=1)
 
     elif midi.isNoteOff():
         print('OFF:\t', midi.getMidiNoteName(midi.getNoteNumber()), '\n')
@@ -56,8 +57,10 @@ def midi_serializer(midi):
         'noteOn': midi.isNoteOn(),
         'key': midi.getMidiNoteName(midi.getNoteNumber()),
         'keyNumber': midi.getNoteNumber(),
-        'velocity': midi.getVelocity()
+        'velocity': midi.getVelocity(),
+        'sentAt': datetime.now()
     }
+    print(midi_message)
     return pickle.dumps(midi_message)
 
 if __name__ == "__main__": 
