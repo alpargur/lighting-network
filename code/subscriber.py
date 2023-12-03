@@ -9,7 +9,7 @@ from datetime import datetime
 
 # configuration variable
 NETWORK_PORT = 1883
-BROKER_ADDRESS = "localhost"
+BROKER_ADDRESS = 'localhost'
 KEEP_ALIVE = 120
 
 # LED configuration
