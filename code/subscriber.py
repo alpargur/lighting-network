@@ -3,7 +3,7 @@
 import time
 import paho.mqtt.client as mqtt
 import board
-# import neopixel
+import neopixel
 import pickle
 from datetime import datetime
 
@@ -26,10 +26,10 @@ def on_message(client, data, message):
     delta_time = datetime.now() - message['sentAt']
     print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
     # print()
-    # pixels_1.fill((0, 6, 10))
+    pixels_1.fill((0, 6, 10))
     # time.sleep(0.18)
-    # pixels_1[10] = (0, 20, 255)
-    # pixels_1.fill((0, 0, 0))
+    pixels_1[10] = (0, 20, 255)
+    pixels_1.fill((0, 0, 0))
 
 
 
