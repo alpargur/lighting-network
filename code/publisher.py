@@ -6,7 +6,7 @@ import pickle
 from datetime import datetime
 
 ## configuration variables
-NETWORK_IP = '139.6.19.50'
+NETWORK_IP = '192.168.178.64'
 NETWORK_PORT = 1883
 KEEP_ALIVE = 121
 DESTINATION_TOPIC = "midi-note.received"
