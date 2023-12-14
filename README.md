@@ -27,6 +27,13 @@ MQTT Port will be set to 1884 instead of 1883.<br>
 
 ![MQTT Mosquitto Setup](./assets/img/Broker_Setup.png)
 
+- **Switch Configuration:** <br>
+The Switch is used for mirroring and analyzing the traffic. <br>
+Here, all of the components will be connected to the switch with the same IP Netmask 139.6.19.x .<br>
+Port 13 of the Switch will be designated to SPAN Port, and will capture the outgoing traffic from Publisher.<br>
+
+![Switch Config](./assets/img/Switch-Config.png)
+
 ## System Components
 - Hardware
     - Master node (computer w macOS / Windows)
