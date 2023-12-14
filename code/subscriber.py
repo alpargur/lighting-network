@@ -1,25 +1,40 @@
+#!/usr/bin/python3
+
+import time
 import paho.mqtt.client as mqtt
-from mido import MidiFile
-# This is the Subscriber
+import board
+import neopixel
+import pickle
+from datetime import datetime
 
-def on_connect(client, userdata, flags, rc):
-  print("Connected with result code "+str(rc))
-  client.subscribe("topic/test")
+# configuration variable
+NETWORK_PORT = 1883
+BROKER_ADDRESS = 'localhost'
+KEEP_ALIVE = 120
 
-def on_message(client, userdata, msg):
-    f = open('drum_patterns_2.mid', 'wb')
-    f.write(msg.payload)
-    print("audio Received")
+# LED configuration
+# TODO
+
+pixels_1 = neopixel.NeoPixel(board.D18, 55, brightness=1)
+
+def on_connect(client, data, flags, rc):
+    print("Connected with result code:\t", str(rc))
+    client.subscribe(topic="midi-note.received", qos=1)
+
+def on_message(client, data, message):
+    message = pickle.loads(message.payload)
+    delta_time = datetime.now() - message['sentAt']
+    print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
+    # print()
+    pixels_1.fill((0, 6, 10))
+    # time.sleep(0.18)
+    pixels_1[10] = (0, 20, 255)
+    pixels_1.fill((0, 0, 0))
 
 
-    f.close()
-    client.disconnect()
-    
+
 client = mqtt.Client()
-client.connect("localhost",1883,60)
-
+client. connect_async(BROKER_ADDRESS, NETWORK_PORT, KEEP_ALIVE)
 client.on_connect = on_connect
 client.on_message = on_message
-mid = MidiFile('drum_patterns_2.mid', clip=True)
-print(mid)
 client.loop_forever()

@@ -65,11 +65,11 @@ Port 13 of the Switch will be designated to SPAN Port, and will capture the outg
 ## Task Distribution
 | Task                                   | Assignee        |
 |----------------------------------------|-----------------|
-| Build the end-to-end architecture      | Alpar, Bach     |
-| Implementation LED controlling program | Alpar, Bach     |
-| Scale up the lighting network          | Alpar, Bach     |
-| Create report                          | Alpar, Bach     |
-| Presentation                           | Alpar, Bach     |
+| [x] Build the end-to-end architecture      | Alpar, Bach     |
+| [] Implementation LED controlling program | Alpar, Bach     |
+| [] Scale up the lighting network          | Alpar, Bach     |
+| [] Create report                          | Alpar, Bach     |
+| [] Presentation                           | Alpar, Bach     |
 
 
 # Setup Environment
@@ -86,3 +86,39 @@ Port 13 of the Switch will be designated to SPAN Port, and will capture the outg
 - To close the virtual environment => `deactivate`
 - If you need to install new packages run => `pip install <package_name>==<package_version>`
 - And update the **requirements.txt** => `pip freeze > requirements.txt`
+
+# ToDos
+- [x] (De)serialize MIDI messages
+- [x] SSH connection
+- [x] Switch configuration
+- [] Wireshark
+- [] LED controller
+
+# Wireshark Analysis
+We analyzed the network for the three QoS levels. We investigated network throughput and latency (expect QoS 0) for two different MIDI message types (impulse signal & drum beat).
+
+## QoS 0
+This level uses the fire and forget mechanism.
+### Throughput
+- **Impulse Signal:** Throughtput stays the same for impulse signal play in a ~1 second interval (308 bytes/sec). 
+- **Drum Beat:** Drum beat constant signal with rapid movements. (3181 bytes/sec) 
+
+### Delay
+- No RTT information available from Wireshark.
+
+## QoS 1
+This level ensures that a message is delivered at least once and sender receives an acknowledgement message about the message status.
+### Throughput
+- **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
+- **Drum Beat:** After `messageId = 39` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. Significant decrease due the shortened time of recording. (1626 bytes/sec) 
+
+## QoS 2
+This level enures that a message is delivered exactly ones sender receives an acknowledgement message about the message status.
+### Throughput
+- **Impulse Signal:** 378 bytes/sec
+- **Drum Beat:** ~2000 bytes/sec
+
+
+### Delay
+- **Impulse Signal:** 33 ms on average
+- **Drum Beat:** ~37ms on average
