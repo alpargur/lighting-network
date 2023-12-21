@@ -8,28 +8,51 @@ import pickle
 from datetime import datetime
 
 # configuration variable
-NETWORK_PORT = 1883
+NETWORK_PORT = 1884
 BROKER_ADDRESS = 'localhost'
-KEEP_ALIVE = 120
+KEEP_ALIVE = 120 # in seconds
+SOURCE_TOPIC = "midi-note.received"
 
 # LED configuration
-# TODO
+GIO_PIN = board.D18
+LED_COUNT = 60
+BRIGHTNESS = 20
+QOS = 1 # Quality of Service level, possible values => 0, 1, 2
 
-pixels_1 = neopixel.NeoPixel(board.D18, 55, brightness=1)
+led_strip = neopixel.NeoPixel(GIO_PIN, LED_COUNT, BRIGHTNESS)
+
+# midi key and led mappings
+drum_kit = {
+    'ride': 51, 'crash': 49, 'hi-tom': 47, 'open-hi-hat': 46, 'mid-tom': 45, 'low-tom': 44, 'snare-drum': 43, 
+    'clap': 39, 'rim-shot': 37, 'bass-drum': 36
+}
+
+
 
 def on_connect(client, data, flags, rc):
     print("Connected with result code:\t", str(rc))
-    client.subscribe(topic="midi-note.received", qos=1)
+    client.subscribe(SOURCE_TOPIC, QOS)
 
 def on_message(client, data, message):
     message = pickle.loads(message.payload)
-    delta_time = datetime.now() - message['sentAt']
-    print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
+    # delta_time = datetime.now() - message['sentAt']
+    # print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
+    midi_key = message['keyNumber']
+
+    if midi_key == drum_kit['bass-drum'] :
+        led_strip[5] = ((255, 0, 0))
+    elif midi_key == drum_kit['clap'] :
+        led_strip[5:11] = ((255,255, 0))
+    elif midi_key == drum_kit['crash'] :
+        led_strip[11:17] = ((255, 0, 255))
+    elif midi_key == drum_kit['hi-tom'] :
+        led_strip[17:23] = ((0, 0, 255))
+    
     # print()
-    pixels_1.fill((0, 6, 10))
+    # led_strip.fill((0, 6, 10))
     # time.sleep(0.18)
-    pixels_1[10] = (0, 20, 255)
-    pixels_1.fill((0, 0, 0))
+    # led_strip[10] = (0, 20, 255)
+    # led_strip.fill((0, 0, 0))
 
 
 
