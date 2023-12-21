@@ -43,11 +43,11 @@ def on_message(client, data, message):
         for i in range(5):
             led_strip[i] = (255, 0, 0)  # Set the color for each LED
         led_strip.show()
-
-    # elif midi_key == drum_kit['clap'] :
-    #     led_strip[5:11] = ((255, 255, 0))
-    #     time.sleep(0.18)
-    #     led_strip[17:23].fill((0, 0, 0))
+    
+    elif midi_key == drum_kit['clap'] :
+        for i in range(5, 11):
+            led_strip[i] = (0, 255, 0)  # Set the color for each LED
+        led_strip.show()
 
     # elif midi_key == drum_kit['crash'] :
     #     led_strip[11:17] = ((255, 0, 255))
