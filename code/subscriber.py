@@ -38,10 +38,15 @@ def on_message(client, data, message):
     # delta_time = datetime.now() - message['sentAt']
     # print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
     midi_key = message['keyNumber']
+    note_on = message['noteOn']
 
     if midi_key == drum_kit['bass-drum'] :
-        for i in range(5):
-            led_strip[i] = (255, 0, 0)  # Set the color for each LED
+        if note_on:
+            for i in range(5):
+                led_strip[i] = (255, 0, 0)  # Set the color for each LED
+        else:
+            for i in range(5):
+                led_strip[i] = (0, 0, 0)  # Set the color for each LED
         led_strip.show()
     
     elif midi_key == drum_kit['clap'] :
@@ -49,15 +54,15 @@ def on_message(client, data, message):
             led_strip[i] = (0, 255, 0)  # Set the color for each LED
         led_strip.show()
 
-    # elif midi_key == drum_kit['crash'] :
-    #     led_strip[11:17] = ((255, 0, 255))
-    #     time.sleep(0.18)
-    #     led_strip[17:23].fill((0, 0, 0))
+    elif midi_key == drum_kit['crash'] :
+        for i in range(11, 17):
+            led_strip[i] = (0, 255, 0)  # Set the color for each LED
+        led_strip.show()
 
-    # elif midi_key == drum_kit['hi-tom'] :
-    #     led_strip[17:23] = ((0, 0, 255))
-    #     time.sleep(0.18)
-    #     led_strip[17:23].fill((0, 0, 0))
+    elif midi_key == drum_kit['hi-tom'] :
+        for i in range(17, 23):
+            led_strip[i] = (0, 255, 0)  # Set the color for each LED
+        led_strip.show()
     
     # print()
     # led_strip.fill((0, 6, 10))
