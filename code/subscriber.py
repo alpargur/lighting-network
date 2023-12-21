@@ -19,7 +19,7 @@ LED_COUNT = 60
 BRIGHTNESS = 20
 QOS = 1 # Quality of Service level, possible values => 0, 1, 2
 
-led_strip = neopixel.NeoPixel(GIO_PIN, LED_COUNT, BRIGHTNESS)
+led_strip = neopixel.NeoPixel(GIO_PIN, LED_COUNT, brightness=BRIGHTNESS)
 
 # midi key and led mappings
 drum_kit = {
