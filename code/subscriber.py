@@ -42,26 +42,27 @@ def on_message(client, data, message):
 
     if midi_key == drum_kit['bass-drum'] :
         if note_on:
-            for i in range(5):
+            for i in range(6):
                 led_strip[i] = (255, 0, 0)  # Set the color for each LED
+            led_strip.show()
         else:
-            for i in range(5):
+            for i in range(6):
                 led_strip[i] = (0, 0, 0)  # Set the color for each LED
-        led_strip.show()
+            led_strip.show()
     
     elif midi_key == drum_kit['clap'] :
-        for i in range(5, 11):
+        for i in range(6, 12):
             led_strip[i] = (0, 255, 0)  # Set the color for each LED
         led_strip.show()
 
     elif midi_key == drum_kit['crash'] :
-        for i in range(11, 17):
-            led_strip[i] = (0, 255, 0)  # Set the color for each LED
+        for i in range(12, 18):
+            led_strip[i] = (0, 0, 255)  # Set the color for each LED
         led_strip.show()
 
     elif midi_key == drum_kit['hi-tom'] :
-        for i in range(17, 23):
-            led_strip[i] = (0, 255, 0)  # Set the color for each LED
+        for i in range(18, 24):
+            led_strip[i] = (0, 255, 100)  # Set the color for each LED
         led_strip.show()
     
     # print()

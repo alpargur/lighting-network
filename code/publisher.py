@@ -6,8 +6,8 @@ import pickle
 from datetime import datetime
 
 ## configuration variables
-NETWORK_IP = '192.168.178.64'
-NETWORK_PORT = 1883
+NETWORK_IP = '172.20.10.2'
+NETWORK_PORT = 1884
 KEEP_ALIVE = 121
 DESTINATION_TOPIC = "midi-note.received"
 MIDI_PORT = 0 # virtual bus midi port
