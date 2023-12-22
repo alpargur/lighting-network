@@ -38,7 +38,7 @@ def on_message(client, data, message):
 
 def light_up(note_on, drum_element):
 
-    color = led_strip[i] = OFF
+    color = OFF
     if note_on:
         color = drum_element['color']
 
