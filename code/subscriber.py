@@ -44,7 +44,7 @@ def light_up(note_on, drum_element, velocity):
     led_strip.show()
 
 def get_color_with_brightness(color, velocity):
-    return (velocity/255 * color)
+    return (int(velocity/255) * color)
 
 def calculate_delay(sent_at):
     delta_time = datetime.now() - sent_at
