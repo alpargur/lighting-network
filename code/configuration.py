@@ -48,7 +48,7 @@ drum_kit = {
         'range': range(36, 42)
     },
     '39': {
-        'name': ;clap,
+        'name': 'clap',
         'color': colors['celeste'],
         'range': range(42, 48)
     },
