@@ -30,25 +30,29 @@ def on_connect(client, data, flags, rc):
     client.subscribe((SOURCE_TOPIC, QOS))
 
 def on_message(client, data, message):
-    # print('QoS:\t' + str(message.qos))
     message = pickle.loads(message.payload)
-    # delta_time = datetime.now() - message['sentAt']
-    # print("Audio received, delay time:\t", delta_time.total_seconds()*1000, ' ms')
     midi_key = message['keyNumber']
     note_on = message['noteOn']
 
-    light_up(note_on, drum_kit[midi_key])
+    print(type(midi_key))
+    # light_up(note_on, drum_kit[midi_key])
 
 def light_up(note_on, drum_element):
 
     color = led_strip[i] = OFF
     if note_on:
         color = drum_element['color']
-        
+
     for i in drum_element['range']:
         led_strip[i] = color
     led_strip.show()
 
+def calculate_delay(sent_at):
+    delta_time = datetime.now() - sent_at
+    print("Midi received, delay time:\t", delta_time.total_seconds()*1000, " ms")
+
+def get_qos(messasge):
+    print("QoS:\t", str(message.qos))
 client = mqtt.Client(client_id='midi-lights', clean_session=False)
 client.connect_async(BROKER_ADDRESS, NETWORK_PORT, KEEP_ALIVE)
 client.on_connect = on_connect
