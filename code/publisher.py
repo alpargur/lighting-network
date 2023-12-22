@@ -6,11 +6,15 @@ import pickle
 from datetime import datetime
 
 ## configuration variables
-NETWORK_IP = '172.20.10.2'
-NETWORK_PORT = 1884
+BROKER_ADDRESS = '139.6.19.50'
+NETWORK_PORT = 1883
 KEEP_ALIVE = 121
 DESTINATION_TOPIC = "midi-note.received"
+QOS = 0
 MIDI_PORT = 0 # virtual bus midi port
+
+def on_connect(client, data, flags, rc):
+    print("Connected with result code:\t", str(rc))
 
 def midi_publisher(midi_in, client):
     ## get the available midi input ports
@@ -33,21 +37,21 @@ def midi_publisher(midi_in, client):
 
     # Clean up
     midi_in.closePort()
-    midi_in.cancelCallback()
+    midi_in.cancelCallback()  
     client.disconnect()
 
 def midi_handler(midi):
     if midi.isNoteOn():
-        # print('MIDI NOTE PUBLISHED')
         print('ON:\t', midi.getMidiNoteName(midi.getNoteNumber()), midi.getVelocity(), '\n')
-
-        # publish message 
-        # TODO: parse and serialize midi messages
-        client.publish(topic=DESTINATION_TOPIC, payload=midi_serializer(midi), qos=1)
+        client.publish(topic=DESTINATION_TOPIC, 
+                       payload=midi_serializer(midi), 
+                       qos=QOS)
 
     elif midi.isNoteOff():
         print('OFF:\t', midi.getMidiNoteName(midi.getNoteNumber()), '\n')
-        client.publish(DESTINATION_TOPIC, midi_serializer(midi))
+        client.publish(topic=DESTINATION_TOPIC, 
+                       payload=midi_serializer(midi), 
+                       qos=QOS)
 
     elif midi.isController():
         print('MIDI Controller Number:\t' + midi.getControllerNumber() + '\tMIDI Controller Value:\t' + midi.getControllerValue())
@@ -67,6 +71,7 @@ if __name__ == "__main__":
     midi_in = rtmidi.RtMidiIn()
     ## establish mqtt connection 
     client = mqtt.Client()
-    client.connect(NETWORK_IP, NETWORK_PORT, KEEP_ALIVE)
+    client.connect(BROKER_ADDRESS, NETWORK_PORT, KEEP_ALIVE)
+    client.on_connect = on_connect
     midi_publisher(midi_in, client)
     
