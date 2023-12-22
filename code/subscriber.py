@@ -34,8 +34,7 @@ def on_message(client, data, message):
     midi_key = message['keyNumber']
     note_on = message['noteOn']
 
-    print(type(midi_key))
-    # light_up(note_on, drum_kit[midi_key])
+    light_up(note_on, drum_kit[midi_key])
 
 def light_up(note_on, drum_element):
 
