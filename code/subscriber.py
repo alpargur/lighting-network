@@ -31,20 +31,20 @@ def on_connect(client, data, flags, rc):
 
 def on_message(client, data, message):
     message = pickle.loads(message.payload)
-    midi_key = message['keyNumber']
-    note_on = message['noteOn']
+    light_up(message['noteOn'], drum_kit[message['keyNumber']], message['velocity'])
 
-    light_up(note_on, drum_kit[midi_key])
-
-def light_up(note_on, drum_element):
+def light_up(note_on, drum_element, velocity):
 
     color = OFF
     if note_on:
-        color = drum_element['color']
+        color = get_color_with_brightness(drum_element['color'], velocity)
 
     for i in drum_element['range']:
         led_strip[i] = color
     led_strip.show()
+
+def get_color_with_brightness(color, velocity):
+    return (velocity/255 * color)
 
 def calculate_delay(sent_at):
     delta_time = datetime.now() - sent_at
