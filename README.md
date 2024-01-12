@@ -1,6 +1,11 @@
 # lighting-network
 Lighting Network for Audiovisual System
 
+# ToDos
+- [] Tidy up GitHub repo
+- [] Report until 22.01.23
+- [] Presentation Slides
+
 ## System Architecture
 A computer (master node) will play audio via Ableton Live and send MIDI notes to a network of LED light strip(s) over WiFi.<br>
 LED lights are controlled by an Arduino / Rasberry Pi controller(s).
@@ -87,13 +92,6 @@ Port 13 of the Switch will be designated to SPAN Port, and will capture the outg
 - If you need to install new packages run => `pip install <package_name>==<package_version>`
 - And update the **requirements.txt** => `pip freeze > requirements.txt`
 
-# ToDos
-- [x] (De)serialize MIDI messages
-- [x] SSH connection
-- [x] Switch configuration
-- [] Wireshark
-- [] LED controller
-
 # Wireshark Analysis
 We analyzed the network for the three QoS levels. We investigated network throughput and latency (expect QoS 0) for two different MIDI message types (impulse signal & drum beat).
 
@@ -117,7 +115,6 @@ This level enures that a message is delivered exactly ones sender receives an ac
 ### Throughput
 - **Impulse Signal:** 378 bytes/sec
 - **Drum Beat:** ~2000 bytes/sec
-
 
 ### Delay
 - **Impulse Signal:** 33 ms on average
