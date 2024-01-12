@@ -31,7 +31,11 @@ def on_connect(client, data, flags, rc):
 
 def on_message(client, data, message):
     message = pickle.loads(message.payload)
-    light_up(message['noteOn'], drum_kit[message['keyNumber']], message['velocity'])
+    
+    if message['keyNumber'] in drum_kit.keys():
+        light_up(message['noteOn'], drum_kit[message['keyNumber']], message['velocity'])
+    else:
+        print('MIDI with unknown key is received. Check the configuration.')
 
 def light_up(note_on, drum_element, velocity):
 
@@ -53,6 +57,8 @@ def calculate_delay(sent_at):
 
 def get_qos(messasge):
     print("QoS:\t", str(message.qos))
+
+
 client = mqtt.Client(client_id='midi-lights', clean_session=False)
 client.connect_async(BROKER_ADDRESS, NETWORK_PORT, KEEP_ALIVE)
 client.on_connect = on_connect
