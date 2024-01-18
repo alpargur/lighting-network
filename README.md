@@ -83,8 +83,6 @@ Following table depicts the mapping used in transforming MIDI information to vis
 | velocity | Adjusts the LEDs' brightness |
 
 <br>
----
-<br>
 
 ## Milestones
 1. Build the end-to-end architecture
