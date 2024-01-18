@@ -79,8 +79,8 @@ Following table depicts the mapping used in transforming MIDI information to vis
 | --- | --- |
 | noteOn (boolean) | Turns LEDs on/off |
 | key (string) | Chooses which LEDs to be controlled (NYI) |
-| keyNumber (integer) | Chooses which LEDs to be controlled |
-| velocity | Adjusts the LEDs' brightness |
+| keyNumber (numeric) | Chooses which LEDs to be controlled |
+| velocity (numeric)  | Adjusts the LEDs' brightness |
 
 <br>
 
