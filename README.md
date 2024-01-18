@@ -30,6 +30,7 @@ To get started you will need a couple of tools ready. Here is a list of tools yo
 | [Female Connector](https://www.amazon.de/dp/B0BR4S7J23?psc=1&ref=ppx_yo2ov_dt_b_product_details) | Connects LEDs with the power supply |
 | [Ableton Live](https://www.ableton.com/de/shop/?mtm_campaign=20778045271&mtm_kwd=ableton%20live&mtm_source=google&mtm_medium=cpc&mtm_cid=20778045271&mtm_group={AdGroupName}&gclid=Cj0KCQiAtaOtBhCwARIsAN_x-3KUQOT1SvdGork4GlHiQg3X-D_RstrnO8lcREZIC4rGUKvB2Q534vYaAnNqEALw_wcB) | DAW to generate and transmit MIDI data |
 
+<br>
 > 💡 Remark
 > 
 > Ableton Live has the ability to export MIDI data. If you want to use a DAW of your choice make sure that this
@@ -58,7 +59,8 @@ Mosquitto broker needs to be up and running so that the producer can publish int
 - For a quick setup, create a custom configuration and enable anonymous connections =>
     ```bash
     $ sudo nano /path/to/custom.conf # create and edit custom config file
-    $ # add following lines to the config file
+
+    # add following lines to the config file
     $ allow_anonymous true 
     $ listener 1883
     ```
