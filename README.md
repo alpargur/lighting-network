@@ -1,5 +1,5 @@
 # lighting-network
-Lighting Network for Audiovisual System
+Lighting Network for Audiovisual System <br>
 
 ## About The Project
 This project is a MIDI-based real-time audiovisual system for live-shows and installations. <br>
@@ -9,6 +9,7 @@ It's done as a part of Advanced Multimedia Communications course offered at [Col
 > 💡 Attention
 >
 > Unlike many LED controlling systems. Lighting-Network is built on the wireless network connection. 
+<br>
 
 - The setup's heart is the master node. It containes the components to generate sound (DAW) and transmit MIDI signals (publisher). Broker's machine is trivial.
 - MIDI note transmission is based on Message Queuing Telemetry Transport (MQTT). A subscriber on the controller receives the MIDIs and use the data to control the lighting.
@@ -38,20 +39,17 @@ To get started you will need a couple of tools ready. Here is a list of tools yo
 ## Set-up Development Environment
 Make sure you have Python installed on your machine before executing the steps below. For the event-based system to run properly, both the machine with DAW and the Raspberry Pi must be equipped with `paho-mqtt` package. For convenience, you can simply create virtual environment in both machines.
 
-- Go to the root directory
-- Make sure you have the `virtualenv` package =>  `pip show virtualenv`
-- If it's not installed, run => `pip install virtualenv`
-- Create a virtual environment => `python -m venv venv`
-- Activate your environment => `source venv/bin/activate`
-- Download the dependencies => `pip install -r requirements.txt`
-- Download for project package => `python setup.py develop`
+```bash
+# Go to the root directory
 
-<br>
+$ pip show virtualenv # check if you have virtualenv package installed
+$ pip install virtualenv # if not install virtualenv
+$ python -m venv venv # create a virtualenv named venv
+$ source venv/bin/activate # activate virtualenv
+$ pip install -r requirements.txt # download dependencies
 
-- To close the virtual environment => `deactivate`
-- If you need to install new packages run => `pip install <package_name>==<package_version>`
-- And update the **requirements.txt** => `pip freeze > requirements.txt`
-- To shutdown Pi: `sudo shutdown -h now`
+$ deactivate # close the virtualenv
+```
 
 ## Start Mosquitto Broker
 Mosquitto broker needs to be up and running so that the producer can publish into the topic and the subscriber can consume the mesages.
