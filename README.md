@@ -82,6 +82,8 @@ Following table depicts the mapping used in transforming MIDI information to vis
 | keyNumber (integer) | Chooses which LEDs to be controlled |
 | velocity | Adjusts the LEDs' brightness |
 
+<br> --- <br>
+
 ## Milestones
 1. Build the end-to-end architecture
     - Hardware Setup
