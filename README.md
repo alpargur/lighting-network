@@ -72,9 +72,15 @@ Mosquitto broker needs to be up and running so that the producer can publish int
 - If you haven't shutdown Pi properly this may cause some hardware issues in the board. So shutting it properly down is highly suggested!
 
 ## LED Control Logic
+Visualization of MIDI notes is an art in its own way. For demo purposes, we configured an LED strip with 60 LEDs to be controlled by a drum machine with 10 elements. Each element is assigned to 6 consecutive LEDs in a serial fashion. Plus, the unique `keyNumber` of each element is used for color mapping. For details, check out the [configuration.py](./code/configuration.py).
+Following table depicts the mapping used in transforming MIDI information to visual feedback.
 
-
----
+| MIDI Attribute | Control Type |
+| --- | --- |
+| noteOn (boolean) | Turns LEDs on/off |
+| key (string) | Chooses which LEDs to be controlled (NYI) |
+| keyNumber (integer) | Chooses which LEDs to be controlled |
+| velocity | Adjusts the LEDs' brightness |
 
 ## Milestones
 1. Build the end-to-end architecture
