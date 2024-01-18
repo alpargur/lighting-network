@@ -2,13 +2,13 @@
 Lighting Network for Audiovisual System
 
 ## About The Project
-This project is MIDI-based real-time audiovisual system for live-shows and installations. <br>
+This project is a MIDI-based real-time audiovisual system for live-shows and installations. <br>
 It's done as a part of Advanced Multimedia Communications course offered at [Cologne University of Applied Sciences](https://www.th-koeln.de/studium/technische-informatik-master_1197.php) by Prof. Dr. Andreas Grebe in Fall Semester 2023/24.
 
 ## System Architecture
-> ‼️ Attention ‼️
+> 💡 Attention
 >
-> Unlike many LED controlling systems. Lighting-Network is built on wireless connection. 
+> Unlike many LED controlling systems. Lighting-Network is built on the wireless network connection. 
 
 - The setup's heart is the master node. It containes the components to generate sound (DAW) and transmit MIDI signals (publisher). Broker's machine is trivial.
 - MIDI note transmission is based on Message Queuing Telemetry Transport (MQTT). A subscriber on the controller receives the MIDIs and use the data to control the lighting.
@@ -68,8 +68,8 @@ Mosquitto broker needs to be up and running so that the producer can publish int
 - Start mosquitto with the custom config in the background: `mosquitto -c /path/to/custom.conf -d` 
 
 ## Troubleshoot
-- If you are trying to install the packages on your global environment and your Pi is equipped with a recent OS version you might encounter with a failure of package installation. In that case, you can enable `--allow-breaking-changes` flag.
-- If you haven't shutdown Pi properly this may cause some hardware issues in the board. So shutting it properly down is highly suggested.
+- If you are trying to install the packages on your global environment and your Pi is equipped with a recent OS version you might encounter with a failure of package installation. <br> In that case, you can enable `--allow-breaking-changes` flag.
+- If you haven't shutdown Pi properly this may cause some hardware issues in the board. So shutting it properly down is highly suggested!
 
 ## LED Control Logic
 
