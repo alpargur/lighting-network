@@ -111,23 +111,28 @@ We analyzed the network for the three QoS levels. We investigated network throug
 This level uses the fire and forget mechanism.
 ### Throughput
 - **Impulse Signal:** Throughtput stays the same for impulse signal play in a ~1 second interval (308 bytes/sec). 
-- **Drum Beat:** Drum beat constant signal with rapid movements. (3181 bytes/sec) 
+- **Drum Beat:** Drum beat constant signal with rapid movements.  
 
 ### Delay
-- No RTT information available from Wireshark.
+- End-to-End delay measured at 70ms
 
 ## QoS 1
 This level ensures that a message is delivered at least once and sender receives an acknowledgement message about the message status.
 ### Throughput
 - **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
-- **Drum Beat:** After `messageId = 39` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. Significant decrease due the shortened time of recording. (1626 bytes/sec) 
-
+- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [here](https://github.com/eclipse/mosquitto/issues/1821)
 ## QoS 2
 This level enures that a message is delivered exactly ones sender receives an acknowledgement message about the message status.
 ### Throughput
-- **Impulse Signal:** 378 bytes/sec
-- **Drum Beat:** ~2000 bytes/sec
+- **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
+- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [here](https://github.com/eclipse/mosquitto/issues/1821)
 
-### Delay
-- **Impulse Signal:** 33 ms on average
-- **Drum Beat:** ~37ms on average
+As a result, QoS 0 is used for further experiments
+
+## Throughput Analysis with QoS 0
+- Each MIDI signal has two messages for indicating that the note is on or off. The throughput of each note is 3.26 kbps
+- If only 2 MIDI notes are being sent, the total throughput of the drum beat is equal to the summation of each signal
+- If 3 or more nodes are sent, MQTT will sent message as follows
+- - The first instrument which has the lowest Key ID will be sent first. This Key ID can be defined by the user
+- - The rest will either be sent in one message or being split in two or more messages containing multiple notes with different patterns each time. 
+Therefore, if sending a drum beat containing 3 or more instruments, the total throughput is smaller than the sum of each notes
