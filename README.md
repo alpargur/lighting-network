@@ -120,13 +120,13 @@ This level uses the fire and forget mechanism.
 This level ensures that a message is delivered at least once and sender receives an acknowledgement message about the message status.
 ### Throughput
 - **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
-- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [here](https://github.com/eclipse/mosquitto/issues/1821)
+- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [here](https://github.com/eclipse/mosquitto/issues/1821)[here] (https://github.com/eclipse/mosquitto/issues/1517)
 ## QoS 2
 This level enures that a message is delivered exactly ones sender receives an acknowledgement message about the message status.
 ### Throughput
 - **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
 - **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [here](https://github.com/eclipse/mosquitto/issues/1821)
-
+or [here] (https://github.com/eclipse/mosquitto/issues/1517)
 As a result, QoS 0 is used for further experiments
 
 ## Throughput Analysis with QoS 0
