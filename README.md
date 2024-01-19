@@ -11,7 +11,7 @@ It's done as a part of Advanced Multimedia Communications course offered at [Col
 > Unlike many LED controlling systems. Lighting-Network is built on the wireless network connection. 
 <br>
 
-- The setup's heart is the master node. It containes the components to generate sound (DAW) and transmit MIDI signals (publisher). Broker's machine is trivial.
+- The setup's heart is the master node. It contains the components to generate sound (DAW) and transmit MIDI signals (publisher). Broker's machine is trivial.
 - MIDI note transmission is based on Message Queuing Telemetry Transport (MQTT). A subscriber on the controller receives the MIDIs and use the data to control the lighting.
     - The publisher in the master node. It listens to the MIDI interface and publishes the messages to the topic.
     - On the otherside, a subscriber listens to the published MIDI messages, parses the content and uses it to illumunate the LED.
