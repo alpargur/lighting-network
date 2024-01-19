@@ -31,6 +31,7 @@ To get started you will need a couple of tools ready. Here is a list of tools yo
 | [Ableton Live](https://www.ableton.com/de/shop/?mtm_campaign=20778045271&mtm_kwd=ableton%20live&mtm_source=google&mtm_medium=cpc&mtm_cid=20778045271&mtm_group={AdGroupName}&gclid=Cj0KCQiAtaOtBhCwARIsAN_x-3KUQOT1SvdGork4GlHiQg3X-D_RstrnO8lcREZIC4rGUKvB2Q534vYaAnNqEALw_wcB) | DAW to generate and transmit MIDI data |
 
 <br>
+
 > 💡 Remark
 > 
 > Ableton Live has the ability to export MIDI data. If you want to use a DAW of your choice make sure that this
@@ -105,33 +106,35 @@ Following table depicts the mapping used in transforming MIDI information to vis
 
 
 # Wireshark Analysis
-We analyzed the network for the three QoS levels. We investigated network throughput and latency (expect QoS 0) for two different MIDI message types (impulse signal & drum beat).
+We analyzed the network for the three QoS levels and investigated network throughput and latency (expect QoS 0) for two different MIDI message types (single-shot & drum beat).
 
 ## QoS 0
-This level uses the fire and forget mechanism.
+This level uses fire and forget mechanism.
 ### Throughput
-- **Impulse Signal:** Throughtput stays the same for impulse signal play in a ~1 second interval (308 bytes/sec). 
-- **Drum Beat:** Drum beat constant signal with rapid movements.  
+- **Single-Shot:** Throughput stays the same for single-shot play in a ~1 second interval (308 bytes/sec). 
+- **Drum Beat:** Drum beat consists of multiple drum elements sending MIDI notes frequently and the throughput varies along.
 
 ### Delay
-- End-to-End delay measured at 70ms
+- End-to-End delay measured at 70ms.
 
 ## QoS 1
 This level ensures that a message is delivered at least once and sender receives an acknowledgement message about the message status.
 ### Throughput
-- **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
-- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [in this issue](https://github.com/eclipse/mosquitto/issues/1821) or [this] (https://github.com/eclipse/mosquitto/issues/1517)
+- **Single-Shot:** Throughput stays the same for impulse with a slight increase in the throughput size due to additional ACK packets. (390 bytes/sec). 
+- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [in this issue](https://github.com/eclipse/mosquitto/issues/1821) or [this] (https://github.com/eclipse/mosquitto/issues/1517).
+
 ## QoS 2
-This level enures that a message is delivered exactly ones sender receives an acknowledgement message about the message status.
+This level enures that a message is delivered exactly ones, sender receives an acknowledgement message about the message status.
 ### Throughput
-- **Impulse Signal:** Throughtput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
-- **Drum Beat:** After `messageId = 20` MQTT switches automatically back to QoS 0. Following measure depicts the values before the switch. This is due to a Mosquitto MQTT broker problem described [in this issue](https://github.com/eclipse/mosquitto/issues/1821) or [this] (https://github.com/eclipse/mosquitto/issues/1517)
-As a result, QoS 0 is used for further experiments
+- **Single-Shot:** Throughput stays the same for impulse with a slight inrease in the throughput size due to additional ACK packets. (390 bytes/sec). 
+- **Drum Beat:** The same issue from QoS 1 is observed here too. 
+
+For conveniency, we decided to stick to only QoS 0 for further experiments.
 
 ## Throughput Analysis with QoS 0
-- Each MIDI signal has two messages for indicating that the note is on or off. The throughput of each note is 3.26 kbps
-- If only 2 MIDI notes are being sent, the total throughput of the drum beat is equal to the summation of each signal
-- If 3 or more nodes are sent, MQTT will sent message as follows
-- - The first instrument which has the lowest Key ID will be sent first. This Key ID can be defined by the user
-- - The rest will either be sent in one message or being split in two or more messages containing multiple notes with different patterns each time. 
-Therefore, if sending a drum beat containing 3 or more instruments, the total throughput is smaller than the sum of each notes
+- Each triggered MIDI note sends two messages in total. First when the note is on and the second when it is off. The throughput of each note is 3.26 kbps.
+- If only 2 MIDI notes are being sent, the total throughput is equal to the summation of both MIDI notes' throughput.
+- If 3 or more notes are sent, MQTT will sent message as follows:
+    - The first instrument which has the lowest `keyNumber` will be sent first. In case you want to prioritize the end-to-end transmission of a specific drum element, `keyNumber` can be adjusted.
+    - The rest will either be sent in one message or split into two or more messages containing multiple notes with different patterns each time.
+Therefore, when 3 or more MIDI notes are being sent simultaneously, the total throughput is smaller than the aggregation of each element's single throughput.
